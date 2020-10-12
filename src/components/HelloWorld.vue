@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>{{ getName("ly") }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -115,7 +116,17 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  @Prop()
+  private msg: string | undefined;
+
+  mounted() {
+    console.log(this.$props);
+    console.log(this.$store);
+  }
+
+  getName = (name: string) => {
+    return name;
+  };
 }
 </script>
 
@@ -134,5 +145,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello {
+  color: red;
 }
 </style>
