@@ -1,6 +1,6 @@
 module.exports = {
   // 选项...
-  // publicPath: '/landingPage/',
+  publicPath: '/WUSH-web-vue-js/',
   devServer: {
     proxy: {
       '/1.1': {
