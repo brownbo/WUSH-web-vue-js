@@ -6,19 +6,21 @@
         <div class="banner">{{ item }}</div>
       </el-carousel-item>
     </el-carousel>
-    <div>
-      <SButton v-for="item in 4" :key="item">
+    <div class="button-wrap">
+      <SButton v-for="(item, index) in iconlist" :key="index">
         <div>
-          {{ item + 6 }}
+          <i :class="item"></i>
         </div>
       </SButton>
     </div>
-    <div>
-      <span>青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</span>
+    <div class="list">
+      <span class="list-item"
+        >青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</span
+      >
       <el-divider></el-divider>
       <span>少量的邪恶足以抵消全部高贵的品质, 害得人声名狼藉</span>
     </div>
-    <Static />
+    <!-- <Static /> -->
     <div @click="changeCount()">222</div>
   </div>
 </template>
@@ -31,12 +33,15 @@ import SButton from './components/Button.vue';
 import Head from '@/components/TheHead.vue';
 import { getActiveList } from '@/service/leancloud';
 
+type IconTypes = 'add' | 'members' | 'static' | 'memo';
+
+type IconArray = string[];
 @Component({
   components: {
-    HelloWorld,
-    Static,
     Head,
     SButton,
+    Static,
+    HelloWorld,
   },
 })
 export default class Home extends Vue {
@@ -45,6 +50,12 @@ export default class Home extends Vue {
   //   this.count;
   // }
   count = 1;
+  iconlist: IconArray = [
+    'el-icon-circle-plus-outline',
+    'el-icon-s-custom',
+    'el-icon-pie-chart',
+    'el-icon-tickets',
+  ];
   mounted() {
     console.log(this.$store.state);
     Array.from({ length: 10 }, _ => {
@@ -72,5 +83,23 @@ export default class Home extends Vue {
   background-color: chartreuse;
   height: 150px;
   justify-content: center;
+}
+.button-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 16px;
+  margin-top: 16px;
+}
+.list {
+  margin-top: 16px;
+}
+.list-item {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  word-break: break-all;
 }
 </style>
