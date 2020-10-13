@@ -43,13 +43,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Head from '@/components/TheHead.vue';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import memberList from '@/views/Members/members';
 
 @Component({
   components: {
-    Head,
     FlowLayout,
   },
 })

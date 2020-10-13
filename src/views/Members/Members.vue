@@ -12,13 +12,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Head from '@/components/TheHead.vue';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import Avatar from './components/Avatar.vue';
 import memberList from './members';
 @Component({
   components: {
-    Head,
     Avatar,
     FlowLayout,
   },

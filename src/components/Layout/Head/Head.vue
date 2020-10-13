@@ -33,12 +33,12 @@ export default class TheHead extends Vue {
 <style lang="less" scpoed>
 .header {
   width: 100%;
-  height: 60px;
-  background-color: #6c95f2;
+  height: 50px;
+  background-color: #70bd8e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 16px;
   color: #fff;
   position: relative;
 }

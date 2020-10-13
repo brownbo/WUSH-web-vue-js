@@ -1,7 +1,10 @@
 <template>
   <div>
     <Head :title="title"></Head>
-    <slot></slot>
+    <div class="content">
+      
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -17,4 +20,9 @@ export default Vue.extend({
 </script>
 
 <style lang="less" scoped>
+.content {
+  background-color: #fff;
+  min-height: 100vh;
+  position: relative;
+}
 </style>

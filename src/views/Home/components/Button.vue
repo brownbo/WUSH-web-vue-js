@@ -1,5 +1,5 @@
 <template>
-  <div class="button" :style="{ backgroundColor: buttonStyle }">
+  <div class="button" :style="{ backgroundColor: buttonColor }">
     <slot></slot>
   </div>
 </template>
@@ -9,6 +9,11 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 @Component
 export default class Button extends Vue {
   @Prop() child?: ChildNode;
+  @Prop() backgroundColor?: string;
+
+  get buttonColor() {
+    return this.backgroundColor || '#eee';
+  }
   // tempColor = Math.random() * 155 + 100;
   buttonStyle = `rgb(${Math.random() * 100 + 100},${Math.random() * 155 +
     100},${Math.random() * 155 + 100} )`;

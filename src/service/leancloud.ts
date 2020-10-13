@@ -9,6 +9,7 @@ const { Query } = AV;
 export const getActiveList = async () => {
   const query = new Query('Active');
   // console.log(query, 'query');
+  query.descending('time');
   query.include('type');
   return await query.find();
 };

@@ -31,25 +31,29 @@ import { Component, Vue } from 'vue-property-decorator';
 import { getActiveDetail } from '@/service/leancloud';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import moment from 'moment';
-import Head from '@/components/TheHead.vue';
 import memberList from '../Members/members';
 
 @Component({
   components: {
-    Head,
     FlowLayout,
   },
 })
 export default class ActivitiesDetail extends Vue {
   data: any = {};
   mounted() {
-    console.log(777);
-    this.getDetail();
+    const loading = this.$loading({
+      lock: true,
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)',
+      customClass: 'loading',
+    });
+    this.getDetail().then(() => {
+      loading.close();
+    });
   }
 
   async getDetail() {
     const id = this.$route.query.id;
-    console.log(this.$route, 'id');
     const _res: any = await getActiveDetail(id as string);
     this.data = (_res && _res[0] && _res[0].attributes) || {};
   }
@@ -88,7 +92,7 @@ export default class ActivitiesDetail extends Vue {
 .banner {
   display: flex;
   align-items: center;
-  height: 150px;
+  height: 200px;
   justify-content: center;
   background-size: cover;
   background-position: center;

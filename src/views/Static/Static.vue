@@ -18,11 +18,9 @@ import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import StaticType, { StaticTypeData } from './StaticType.vue';
 import StaticTime from './StaticTime.vue';
 import _ from 'lodash';
-import Head from '@/components/TheHead.vue';
 
 @Component({
   components: {
-    Head,
     FlowLayout,
     StaticType,
     StaticTime,

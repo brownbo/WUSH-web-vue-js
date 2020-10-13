@@ -7,10 +7,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
-import Head from '@/components/TheHead.vue';
 @Component({
   components: {
-    Head,
     FlowLayout,
   },
 })

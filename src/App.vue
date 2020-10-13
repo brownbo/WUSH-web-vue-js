@@ -21,4 +21,7 @@ body {
   margin: 0;
   padding: 0;
 }
+.el-loading-spinner i {
+  color: #fff !important;
+}
 </style>

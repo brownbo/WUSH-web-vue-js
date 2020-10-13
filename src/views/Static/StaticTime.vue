@@ -1,5 +1,5 @@
 <template>
-  <canvas :id="id" class="canvas" height="200"></canvas>
+  <canvas :id="id" class="canvas" height="120"></canvas>
 </template>
 
 <script lang="ts">
