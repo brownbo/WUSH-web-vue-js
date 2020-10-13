@@ -1,6 +1,12 @@
 module.exports = {
   // 选项...
-  publicPath: '/WUSH-web-vue-js/',
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].title = '打算多久开荤?';
+      return args;
+    });
+  },
+  publicPath: '/landingPage/',
   devServer: {
     proxy: {
       '/1.1': {
