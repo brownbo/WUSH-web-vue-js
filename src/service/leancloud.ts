@@ -1,4 +1,6 @@
 import AV from 'leancloud-storage';
+import { compress } from '@/utils/comImg';
+
 AV.init({
   appId: 'waHHh1kDAVAjEKVwplPaoczv-gzGzoHsz',
   appKey: 'oyXsYJhwsRM7AcLo7r84NyGP',
@@ -70,9 +72,11 @@ export const updateActiveType = async (id: string) => {
 };
 
 export const saveFile = async (file: any) => {
-  const tempFile = new AV.File(file.name, file);
+  const blob = await compress(file);
+  // console.log(blob,'tempFile111')
+  const tempFile = new AV.File(file.name, blob);
   const AVfile = await tempFile.save();
-  // console.log(AVfile, 'AVfile');
+  console.log(AVfile, 'AVfile');
   return AVfile;
 };
 
