@@ -39,10 +39,10 @@ export default class StaticTime extends Vue {
       pixelRatio: window.devicePixelRatio,
     });
 
-    chart.scale('time', {
-      type: 'timeCat',
-      sortable: false,
-    });
+    // chart.scale('time', {
+    //   type: 'timeCat',
+    //   sortable: false,
+    // });
     chart.source(data, {
       sales: {
         // tickCount: 10,

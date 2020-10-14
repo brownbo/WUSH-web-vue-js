@@ -20,6 +20,8 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "qs": "^6.9.4",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",

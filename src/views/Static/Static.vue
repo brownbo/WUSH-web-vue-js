@@ -34,7 +34,7 @@ export default class Static extends Vue {
     const activities = this.$store.state.activities || [];
     const tempActivities = activities.map((val: any) => ({
       ...val,
-      time: moment(val.time).format('YYYY/MM/DD'),
+      time: moment(val.time).format('YYYY/MM'),
     }));
     const newActivities = _.groupBy(tempActivities, 'time');
     const newValues = _.values(newActivities)
@@ -56,7 +56,7 @@ export default class Static extends Vue {
     const tempTypes = types.map((val: any) => ({
       title: val.name,
       name: val.id,
-      percent: val.count / maxData,
+      percent: parseFloat((val.count / maxData).toFixed(2)),
       a: '1',
     }));
     return tempTypes;
