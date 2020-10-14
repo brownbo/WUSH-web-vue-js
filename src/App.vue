@@ -24,4 +24,9 @@ body {
 .el-loading-spinner i {
   color: #fff !important;
 }
+.message-tips {
+  width: 80%;
+  height: 40px;
+  min-width: unset !important;
+}
 </style>

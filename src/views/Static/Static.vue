@@ -55,7 +55,7 @@ export default class Static extends Vue {
     const maxData = _.sum(types.map((val: any) => val.count));
     const tempTypes = types.map((val: any) => ({
       title: val.name,
-      name: val.key,
+      name: val.id,
       percent: val.count / maxData,
       a: '1',
     }));

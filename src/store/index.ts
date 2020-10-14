@@ -19,13 +19,13 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getAllData(context) {
-      await context.dispatch('getActivitiesAction');
-      await context.dispatch('getTypesAction');
+    async getAllData(context, forceUpdate) {
+      await context.dispatch('getActivitiesAction', forceUpdate);
+      await context.dispatch('getTypesAction', forceUpdate);
     },
 
-    async getActivitiesAction(context) {
-      if (context.state.activities.length > 0) {
+    async getActivitiesAction(context, forceUpdate) {
+      if (context.state.activities.length > 0 && !forceUpdate) {
         console.log('当前有数据，不请求');
         return false;
       }
@@ -36,8 +36,8 @@ export default new Vuex.Store({
       context.commit('changeState', { activities: tempActities });
     },
 
-    async getTypesAction(context) {
-      if (context.state.types.length > 0) {
+    async getTypesAction(context, forceUpdate) {
+      if (context.state.types.length > 0 && !forceUpdate) {
         console.log('当前有数据，不请求');
         return false;
       }

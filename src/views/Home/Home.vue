@@ -35,6 +35,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import moment from 'moment';
+import { Loading } from 'element-ui';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import SButton from './components/Button.vue';
 import { getActiveList } from '@/service/leancloud';
@@ -89,8 +90,8 @@ export default class Home extends Vue {
     return tempActivities;
   }
 
-  mounted() {
-    const loading = this.$loading({
+  created() {
+    const loading = Loading.service({
       lock: true,
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)',
@@ -100,6 +101,8 @@ export default class Home extends Vue {
       loading.close();
     });
   }
+
+  // mounted() {}
 
   gotoPage(url: IconUrls) {
     this.$router.push({ path: url });
@@ -124,7 +127,6 @@ export default class Home extends Vue {
 .banner {
   display: flex;
   align-items: center;
-  background-color: chartreuse;
   height: 150px;
   justify-content: center;
   background-size: cover;

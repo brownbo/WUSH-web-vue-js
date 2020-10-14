@@ -2,23 +2,40 @@
   <FlowLayout title="好久没吃啦，满足~">
     <div class="container">
       <!-- 属性方式： -->
-      <el-input
-        placeholder="活动标题"
-        suffix-icon="el-icon-date"
-        v-model="input1"
+      <el-input placeholder="活动标题" v-model="name"> </el-input>
+      <el-upload
+        class="item"
+        action=""
+        :http-request="upload"
+        :limit="1"
+        :file-list="fileList"
       >
-      </el-input>
-      <el-select class="item" v-model="value" placeholder="吃的啥">
+        <el-button size="small" type="primary">上传图片</el-button>
+      </el-upload>
+      <el-date-picker
+        class="item"
+        v-model="time"
+        type="date"
+        placeholder="选择日期"
+      >
+      </el-date-picker>
+      <div class="item">
+        <el-radio v-model="radio" label="1">从吃过的选</el-radio>
+        <el-radio v-model="radio" label="2">这次吃的是没吃过的</el-radio>
+      </div>
+      <el-select v-if="radio == 1" v-model="type" placeholder="吃的啥">
         <el-option
-          v-for="item in options"
+          v-for="item in typeOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         >
         </el-option>
       </el-select>
+      <el-input v-if="radio == 2" placeholder="吃的啥" v-model="eatWhat">
+      </el-input>
       <div class="item-title">不会有缺席的吧？</div>
-      <el-checkbox-group class="item" v-model="checkedCities">
+      <el-checkbox-group v-model="membersChoose">
         <el-checkbox
           v-for="(member, index) in memberList"
           :label="member.id"
@@ -26,16 +43,17 @@
           >{{ member.name }}</el-checkbox
         >
       </el-checkbox-group>
+
       <el-input
         class="item"
         type="textarea"
         :rows="2"
         placeholder="具体发生什么啦~"
-        v-model="textarea"
+        v-model="desc"
       >
       </el-input>
       <div class="item submit">
-        <el-button type="primary">点我记录+1~</el-button>
+        <el-button @click="submit" type="primary">点我记录+1~</el-button>
       </div>
     </div>
   </FlowLayout>
@@ -45,6 +63,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import memberList from '@/views/Members/members';
+import {
+  saveActive,
+  saveActiveType,
+  saveFile,
+  updateActiveType,
+  getPointer,
+} from '@/service/leancloud';
 
 @Component({
   components: {
@@ -52,33 +77,64 @@ import memberList from '@/views/Members/members';
   },
 })
 export default class New extends Vue {
-  input1 = '';
+  name = '';
   memberList = memberList;
-  textarea = '';
-  checkedCities = memberList.map(val => val.id);
-  options = [
-    {
-      value: '选项1',
-      label: '黄金糕',
-    },
-    {
-      value: '选项2',
-      label: '双皮奶',
-    },
-    {
-      value: '选项3',
-      label: '蚵仔煎',
-    },
-    {
-      value: '选项4',
-      label: '龙须面',
-    },
-    {
-      value: '选项5',
-      label: '北京烤鸭',
-    },
-  ];
-  value = '';
+  desc = '';
+  radio = '1';
+  time = '';
+  fileList = [];
+  eatWhat = '';
+  banner: any;
+  membersChoose = memberList.map(val => val.id);
+  type = '';
+
+  get typeOptions() {
+    const types = this.$store.state.types;
+    const options = types.map((val: any) => ({
+      value: val.id,
+      label: val.name,
+    }));
+    return options;
+  }
+
+  async upload(file: any) {
+    const res = await saveFile(file.file);
+    this.banner = res;
+  }
+
+  async submit() {
+    if (!this.banner) {
+      this.$message({
+        message: '没有上传Banner奥~',
+        type: 'warning',
+        customClass: 'message-tips',
+      });
+      return;
+    }
+    const eatType = this.radio;
+    const params: any = {
+      name: this.name,
+      time: this.time,
+      desc: this.desc,
+      members: this.membersChoose,
+      banner: this.banner,
+    };
+    if (eatType === '1') {
+      params.type = getPointer('ActiveType', this.type);
+      await updateActiveType(this.type);
+    } else {
+      const tempType = await saveActiveType({ name: this.eatWhat, count: 1 });
+      params.type = tempType;
+    }
+    await saveActive(params);
+    this.$store.dispatch('getAllData', true);
+    this.$message({
+      message: '新增成功~',
+      type: 'success',
+      customClass: 'message-tips',
+    });
+    this.$router.push({ path: '/' });
+  }
 }
 </script>
 
@@ -92,9 +148,13 @@ export default class New extends Vue {
 .item-title {
   margin-top: 16px;
   font-size: 14px;
+  margin-bottom: 4px;
 }
 .submit {
   display: flex;
   justify-content: center;
+}
+.divider {
+  margin: 10px 0;
 }
 </style>
