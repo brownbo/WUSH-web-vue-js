@@ -34,6 +34,7 @@ export default class Static extends Vue {
     const activities = this.$store.state.activities || [];
     const tempActivities = activities.map((val: any) => ({
       ...val,
+      sortTime: val.time,
       time: moment(val.time).format('YYYY/MM'),
     }));
     const newActivities = _.groupBy(tempActivities, 'time');
@@ -42,10 +43,11 @@ export default class Static extends Vue {
         return {
           time: val[0].time,
           sales: val.length,
+          sortTime: val[0].sortTime,
         };
       })
       .sort((a: any, b: any) => {
-        return new Date(a.time).getTime() - new Date(b.time).getTime();
+        return new Date(a.sortTime).getTime() - new Date(b.sortTime).getTime();
       });
     return newValues;
   }
@@ -60,37 +62,6 @@ export default class Static extends Vue {
       a: '1',
     }));
     return tempTypes;
-  }
-
-  mounted() {
-    const activities = this.$store.state.activities || [];
-    const tempActivities = activities.map((val: any) => ({
-      ...val,
-      time: moment(val.time).format('YYYY/MM/DD'),
-    }));
-    const newActivities = _.groupBy(tempActivities, 'time');
-    const newValues = _.values(newActivities)
-      .map((val: any) => {
-        return {
-          time: val[0].time,
-          sales: val.length,
-        };
-      })
-      .sort((a: any, b: any) => {
-        return new Date(a.time).getTime() - new Date(b.time).getTime();
-      });
-    this.$nextTick(() => {
-      this.timeData = [
-        {
-          time: '1956 年',
-          sales: 61,
-        },
-        {
-          time: '1951 年',
-          sales: 38,
-        },
-      ];
-    });
   }
 }
 </script>
