@@ -17,6 +17,7 @@
         v-model="time"
         type="date"
         placeholder="选择日期"
+        :editable="false"
       >
       </el-date-picker>
       <div class="item">
