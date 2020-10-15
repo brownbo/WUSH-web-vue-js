@@ -5,6 +5,7 @@
         v-for="(item, index) in memberList"
         :key="index"
         :data="item"
+        :gotoDetail="() => gotoDetail(item.id)"
       ></Avatar>
     </div>
   </FlowLayout>
@@ -26,6 +27,9 @@ export default class Members extends Vue {
   mounted() {
     console.log(memberList, 'memberList');
   }
+  gotoDetail = (id: number) => {
+    this.$router.push({ path: '/memberInfo', query: { id: id.toString() } });
+  };
 }
 </script>
 

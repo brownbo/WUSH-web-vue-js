@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div @click="gotoDetail" class="container">
     <div
       class="avatar"
       :style="{ backgroundImage: `url(${data.avatar})` }"
@@ -15,9 +15,10 @@ import Vue from 'vue';
 export default Vue.extend({
   props: {
     data: Object,
+    gotoDetail: Function,
   },
   mounted() {
-    console.log(this.data.avatar);
+    // console.log(this.data.avatar);
   },
 });
 </script>

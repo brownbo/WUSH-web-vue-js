@@ -35,11 +35,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import moment from 'moment';
+import { Dialog } from 'vant';
+import _ from 'lodash';
 import { Loading } from 'element-ui';
 import FlowLayout from '@/components/Layout/FlowLayout.vue';
 import SButton from './components/Button.vue';
 import { getActiveList } from '@/service/leancloud';
-
+import { getLatestBirth } from '@/views/Members/members';
 // import BANNERIMG from '@/assets/timg.jepg';
 
 type IconUrls = 'add' | 'members' | 'static' | 'memo';
@@ -87,7 +89,7 @@ export default class Home extends Vue {
       ...val,
       time: moment(val.time).format('YYYY/MM/DD'),
     }));
-    return tempActivities;
+    return tempActivities.slice(0, 4);
   }
 
   created() {
@@ -99,10 +101,18 @@ export default class Home extends Vue {
     });
     this.$store.dispatch('getAllData').then(() => {
       loading.close();
+      const willBirthMan = getLatestBirth();
+      if (willBirthMan.days <= 30) {
+        Dialog.alert({
+          title: '生日提醒',
+          message: `还有${willBirthMan.days}天是 ${
+            willBirthMan.man.name
+          } 的生日\n${moment(willBirthMan.man.birthday).format('MM月DD日')}`,
+          confirmButtonColor: '#70bd8e',
+        });
+      }
     });
   }
-
-  // mounted() {}
 
   gotoPage(url: IconUrls) {
     this.$router.push({ path: url });

@@ -38,7 +38,11 @@ const routes: Array<RouteConfig> = [
     name: 'ActivitiesDetail',
     component: () => import('../views/ActivitiesDetail/ActivitiesDetail.vue'),
   },
-
+  {
+    path: '/memberInfo',
+    name: 'memberInfo',
+    component: () => import('../views/MemberInfo/MemberInfo.vue'),
+  },
   // {
   //   path: '/about',
   //   name: 'About',
