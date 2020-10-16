@@ -17,9 +17,6 @@ export default Vue.extend({
     data: Object,
     gotoDetail: Function,
   },
-  mounted() {
-    // console.log(this.data.avatar);
-  },
 });
 </script>
 <style lang="less" scoped>

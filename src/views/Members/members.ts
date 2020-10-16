@@ -149,50 +149,63 @@ export const getLatestBirth = () => {
   const latestBirthDayManArray = memberList
     .map(val => {
       const curYear = new Date().getFullYear();
-      const futrueYear = curYear + 1;
-      let tempTime = new Date(val.birthday).setFullYear(curYear);
-      let lunarLeapMonth = LunarCalendar.solarToLunar(curYear, 10, 1)
+      let temMonth = new Date(val.birthday).getMonth() + 1;
+      const temDay = new Date(val.birthday).getDate();
+      const lunarLeapMonth = LunarCalendar.solarToLunar(curYear, 10, 1)
         .lunarLeapMonth;
-      if (tempTime < new Date().getTime()) {
-        tempTime = new Date(val.birthday).setFullYear(futrueYear);
-        lunarLeapMonth = LunarCalendar.solarToLunar(futrueYear, 10, 1)
-          .lunarLeapMonth;
-      }
-      return {
-        ...val,
-        birthdayTime: tempTime,
-        lunarLeapMonth,
-      };
-    })
-    .map(val => {
-      let tempBirth = val.birthdayTime;
-      const valYear = new Date(val.birthdayTime).getFullYear();
-      let valMonth = new Date(val.birthdayTime).getMonth() + 1;
-      const valDay = new Date(val.birthdayTime).getDate();
-
-      if (val.lunarLeapMonth > 0 && val.birthdayType === BirthdayType.lunar) {
-        valMonth = val.lunarLeapMonth > valMonth ? valMonth : valMonth + 1;
+      let tempCurrentYearBirth = new Date(val.birthday).setFullYear(curYear);
+      if (lunarLeapMonth > 0 && val.birthdayType === BirthdayType.lunar) {
+        temMonth = lunarLeapMonth > temMonth ? temMonth : temMonth + 1;
       }
       if (val.birthdayType === BirthdayType.lunar) {
         const tempBirthObj = LunarCalendar.lunarToSolar(
-          valYear,
-          valMonth,
-          valDay,
+          curYear,
+          temMonth,
+          temDay,
         );
-        tempBirth = new Date(
-          `${tempBirthObj.year}/${
-            tempBirthObj.month
-          }/${tempBirthObj.day.toString().padStart(2, '0')}`,
+        tempCurrentYearBirth = new Date(
+          `${tempBirthObj.year}/${tempBirthObj.month
+            .toString()
+            .padStart(2, '0')}/${tempBirthObj.day.toString().padStart(2, '0')}`,
         ).getTime();
       }
-      console.log(
-        val.name,
-        new Date(tempBirth).toLocaleDateString(),
-        'tempBirth',
-      );
+      console.log(new Date(tempCurrentYearBirth).toLocaleDateString());
+      return { ...val, currentYearBirth: tempCurrentYearBirth };
+    })
+    .map(val => {
+      const curYear = new Date().getFullYear() + 1;
+      let temMonth = new Date(val.birthday).getMonth() + 1;
+      const temDay = new Date(val.birthday).getDate();
+      const lunarLeapMonth = LunarCalendar.solarToLunar(curYear, 10, 1)
+        .lunarLeapMonth;
+      let tempCurrentYearBirth = new Date(val.birthday).setFullYear(curYear);
+      if (lunarLeapMonth > 0 && val.birthdayType === BirthdayType.lunar) {
+        temMonth = lunarLeapMonth > temMonth ? temMonth : temMonth + 1;
+      }
+      if (val.birthdayType === BirthdayType.lunar) {
+        const tempBirthObj = LunarCalendar.lunarToSolar(
+          curYear,
+          temMonth,
+          temDay,
+        );
+        tempCurrentYearBirth = new Date(
+          `${tempBirthObj.year}/${tempBirthObj.month
+            .toString()
+            .padStart(2, '0')}/${tempBirthObj.day.toString().padStart(2, '0')}`,
+        ).getTime();
+      }
+      console.log(new Date(tempCurrentYearBirth).toLocaleDateString());
+      return { ...val, nextYearBirth: tempCurrentYearBirth };
+    })
+    .map(val => {
+      let realBirth = val.currentYearBirth;
+      const tempTime = new Date(new Date(val.currentYearBirth)).setHours(23);
+      if (tempTime < new Date().getTime()) {
+        realBirth = val.nextYearBirth;
+      }
       return {
         ...val,
-        realBirth: tempBirth,
+        realBirth,
       };
     })
     .sort((a: any, b: any) => {

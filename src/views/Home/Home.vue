@@ -102,7 +102,13 @@ export default class Home extends Vue {
     this.$store.dispatch('getAllData').then(() => {
       loading.close();
       const willBirthMan = getLatestBirth();
-      if (willBirthMan.days <= 30) {
+      if (willBirthMan.days === 0) {
+        Dialog.alert({
+          title: '生日提醒',
+          message: `今天是 ${willBirthMan.man.name} 的生日\n走去搓一顿`,
+          confirmButtonColor: '#70bd8e',
+        });
+      } else if (willBirthMan.days <= 30) {
         Dialog.alert({
           title: '生日提醒',
           message: `还有${willBirthMan.days}天是 ${

@@ -25,7 +25,6 @@ export default class StaticTime extends Vue {
 
   @Watch('data')
   onChangeValue(newVal: StaticTimeData, oldVal: StaticTimeData) {
-    console.log(newVal, 'newVal');
     this.render(newVal || []);
   }
 

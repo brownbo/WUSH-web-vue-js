@@ -12,7 +12,6 @@ const ActiveType = AV.Object.extend('ActiveType');
 
 export const getActiveList = async () => {
   const query = new Query('Active');
-  // console.log(query, 'query');
   query.descending('time');
   query.include('type');
   return await query.find();
@@ -21,7 +20,6 @@ export const getActiveList = async () => {
 export const getActiveDetail = async (id: string) => {
   const query = new Query('Active');
   query.equalTo('objectId', id);
-  // console.log(query, 'query');
   query.include('type');
   return await query.find();
 };
@@ -73,10 +71,8 @@ export const updateActiveType = async (id: string) => {
 
 export const saveFile = async (file: any) => {
   const blob = await compress(file);
-  // console.log(blob,'tempFile111')
   const tempFile = new AV.File(file.name, blob);
   const AVfile = await tempFile.save();
-  console.log(AVfile, 'AVfile');
   return AVfile;
 };
 

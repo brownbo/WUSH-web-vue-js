@@ -24,9 +24,6 @@ import memberList from './members';
 })
 export default class Members extends Vue {
   memberList = memberList;
-  mounted() {
-    console.log(memberList, 'memberList');
-  }
   gotoDetail = (id: number) => {
     this.$router.push({ path: '/memberInfo', query: { id: id.toString() } });
   };

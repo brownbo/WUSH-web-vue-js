@@ -12,16 +12,9 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 export default class TheHead extends Vue {
   // computed() {}
   @Prop() title?: string;
-  mounted() {
-    console.log(this.$router.currentRoute);
-  }
 
   get showBack() {
     const routeName = this.$router.currentRoute.name;
-    console.log(window.location.pathname);
-    // if (url !== '/') {
-    //   this.showBack = url !== '/';
-    // }
     return routeName !== 'Home';
   }
 

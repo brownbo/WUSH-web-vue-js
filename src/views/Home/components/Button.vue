@@ -17,9 +17,6 @@ export default class Button extends Vue {
   // tempColor = Math.random() * 155 + 100;
   buttonStyle = `rgb(${Math.random() * 100 + 100},${Math.random() * 155 +
     100},${Math.random() * 155 + 100} )`;
-  mounted() {
-    console.log(this.$slots.default);
-  }
 }
 </script>
 

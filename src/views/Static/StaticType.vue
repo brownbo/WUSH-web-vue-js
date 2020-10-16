@@ -46,7 +46,6 @@ export default class Static extends Vue {
     chart.legend({
       position: 'right',
       itemFormatter: function itemFormatter(val) {
-        console.log(val);
         const tempData = data.find(_data => _data.name === val) || {
           percent: 0,
           title: '',
