@@ -6116,6 +6116,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+lunar-calendar@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npm.taobao.org/lunar-calendar/download/lunar-calendar-0.1.4.tgz#4303024f889d5d706caf407c45dbdf1ced870be8"
+  integrity sha1-QwMCT4idXXBsr0B8RdvfHO2HC+g=
+
 make-dir@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/make-dir/download/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"

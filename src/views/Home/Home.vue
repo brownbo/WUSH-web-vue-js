@@ -107,7 +107,7 @@ export default class Home extends Vue {
           title: '生日提醒',
           message: `还有${willBirthMan.days}天是 ${
             willBirthMan.man.name
-          } 的生日\n${moment(willBirthMan.man.birthday).format('MM月DD日')}`,
+          } 的生日\n${moment(willBirthMan.man.realBirth).format('MM月DD日')}`,
           confirmButtonColor: '#70bd8e',
         });
       }
